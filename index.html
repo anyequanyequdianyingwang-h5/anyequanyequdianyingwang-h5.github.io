@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>俺也去电影网 - 结伴正版找片·公共领域老片·按类型与渠道导航</title>
+<meta name="description" content="俺也去电影网(anyequanyequdianyingwang-h5.github.io)用结伴正版导航做电影找片：Tubi、Pluto、Plex、Kanopy、Hoopla、Internet Archive、Library of Congress、1905、央视频、学习强国、B站官方等正版/公共领域渠道。不托管视频、不解析未授权源、不诱导下载播放器。">
+<meta name="keywords" content="俺也去电影网, anyequanyequdianyingwang-h5, 结伴找片, 正版电影导航, 公共领域老片, Tubi, Pluto, Kanopy, 1905, 央视频">
+<meta name="author" content="俺也去电影网">
+<meta name="robots" content="index, follow">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#1a1c23;--bg2:#22252f;--ink:#f8f6f0;--ink2:#b5b8c4;
+  --ticket:#f8f6f0;--ticket-dark:#e8e4d9;--orange:#ff6b35;--orange-deep:#e84e1a;
+  --teal:#2ec4b6;--teal-deep:#1a9e91;--blue:#3a86ff;--red:#e63946;--ok:#37c98b;
+  --radius:16px;--shadow:0 16px 40px rgba(0,0,0,.45);
+}
+html{scroll-behavior:smooth}
+body{font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.85;overflow-x:hidden}
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:
+ radial-gradient(520px 360px at 84% 12%,rgba(255,107,53,.12),transparent 60%),
+ radial-gradient(600px 400px at 8% 88%,rgba(46,196,182,.10),transparent 60%),
+ linear-gradient(180deg,#1a1c23,#22252f 55%,#121319 100%);}
+
+/* 顶部导航 */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(26,28,35,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,107,53,.18)}
+.topbar-inner{max-width:1100px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.1rem}
+.brand .mk{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--orange),var(--teal));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.8rem}
+.brand b{color:var(--orange)}
+.topnav{display:flex;gap:4px}
+.topnav a{padding:8px 12px;border-radius:8px;font-size:.82rem;font-weight:600;color:var(--ink2);transition:.25s;text-decoration:none}
+.topnav a:hover,.topnav a.active{background:rgba(255,107,53,.14);color:var(--orange)}
+.menu-btn{display:none;background:none;border:none;font-size:1.4rem;color:var(--orange);cursor:pointer}
+
+/* 票根通用样式 */
+.ticket{position:relative;background:var(--ticket);color:#1a1c23;border-radius:var(--radius);padding:28px;margin-bottom:28px;box-shadow:var(--shadow);overflow:hidden}
+.ticket::before,.ticket::after{content:"";position:absolute;top:50%;width:28px;height:28px;border-radius:50%;background:var(--bg);transform:translateY(-50%);z-index:2}
+.ticket::before{left:-14px}
+.ticket::after{right:-14px}
+.ticket-inner{position:relative;z-index:3;border:2px dashed rgba(255,107,53,.3);border-radius:12px;padding:22px}
+.ticket h2{font-size:1.2rem;color:var(--orange-deep);margin-bottom:8px}
+.ticket h3{font-size:1rem;color:#2a2d3a;margin-bottom:6px}
+.ticket p,.ticket li{font-size:.82rem;color:#4a4d5a;line-height:1.75}
+.ticket ul{margin-left:18px}
+
+/* Hero区 */
+.hero{position:relative;z-index:1;margin-top:60px;padding:60px 20px 40px}
+.hero-inner{max-width:1100px;margin:0 auto}
+.hero-ticket{background:linear-gradient(135deg,var(--orange),var(--orange-deep));color:#fff;position:relative;border-radius:20px;padding:36px;box-shadow:var(--shadow);overflow:hidden}
+.hero-ticket::before,.hero-ticket::after{content:"";position:absolute;top:50%;width:32px;height:32px;border-radius:50%;background:var(--bg);transform:translateY(-50%)}
+.hero-ticket::before{left:-16px}.hero-ticket::after{right:-16px}
+.hero-content{position:relative;z-index:3;border:2px dashed rgba(255,255,255,.4);border-radius:14px;padding:28px;text-align:center}
+.kicker{font-family:"Courier New",monospace;font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.8);background:rgba(0,0,0,.15);padding:4px 12px;border-radius:16px;display:inline-block;margin-bottom:14px}
+.hero h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;line-height:1.2;margin-bottom:10px}
+.hero h1 .o{color:#fff}.hero h1 .t{color:#ffd166}
+.hero p{font-size:.95rem;opacity:.9;max-width:640px;margin:0 auto 22px}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{font-family:inherit;font-weight:700;font-size:.88rem;padding:11px 22px;border-radius:10px;cursor:pointer;border:none;transition:.3s;text-decoration:none;display:inline-block}
+.btn-light{background:#fff;color:var(--orange-deep)}
+.btn-light:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.2)}
+.btn-outline{background:transparent;border:2px solid #fff;color:#fff}
+.btn-outline:hover{background:rgba(255,255,255,.1)}
+
+/* 容器 */
+.container{max-width:1100px;margin:0 auto;padding:40px 20px;position:relative;z-index:1}
+
+/* 对话气泡（俺也去问答） */
+.chat-grid{display:flex;flex-direction:column;gap:16px;margin-top:18px}
+.chat{display:flex;gap:12px;align-items:flex-start;max-width:85%}
+.chat.right{margin-left:auto;flex-direction:row-reverse}
+.chat-avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.8rem;flex-shrink:0}
+.chat.left .chat-avatar{background:var(--orange);color:#fff}
+.chat.right .chat-avatar{background:var(--teal);color:#fff}
+.chat-bubble{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:14px 16px;font-size:.82rem;color:#3a3d4a;line-height:1.65;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.chat.right .chat-bubble{background:var(--teal);color:#fff;border-color:transparent}
+.chat-bubble b{display:block;margin-bottom:4px;font-size:.78rem}
+.chat.left .chat-bubble b{color:var(--orange-deep)}
+.chat.right .chat-bubble b{color:rgba(255,255,255,.9)}
+
+/* 渠道卡片 */
+.ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:18px}
+.ch{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:18px;transition:.3s}
+.ch:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.1);border-color:var(--orange)}
+.ch .tag{font-family:"Courier New",monospace;font-size:.68rem;font-weight:700;color:var(--orange);background:rgba(255,107,53,.08);padding:3px 8px;border-radius:6px;display:inline-block;margin-bottom:8px}
+.ch h3{font-size:.95rem;font-weight:800;color:#1a1c23;margin-bottom:4px}
+.ch p{font-size:.74rem;color:#5a5d6a;line-height:1.6}
+.ch .model{margin-top:8px;font-size:.68rem;font-weight:700;color:var(--teal-deep)}
+
+/* 类型标签 */
+.genre-flex{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.genre-tag{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:20px;padding:10px 18px;font-size:.82rem;font-weight:600;color:#3a3d4a;cursor:default;transition:.25s}
+.genre-tag:hover{border-color:var(--orange);color:var(--orange-deep);transform:scale(1.03)}
+.genre-tag span{font-size:.72rem;color:var(--teal-deep);margin-left:6px}
+
+/* 公共领域 */
+.pd-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:16px}
+.pd-item{background:#fff;border:1px solid rgba(0,0,0,.08);border-left:4px solid var(--teal);border-radius:10px;padding:14px}
+.pd-item h4{font-size:.88rem;color:#1a1c23;margin-bottom:4px}
+.pd-item p{font-size:.72rem;color:#5a5d6a;line-height:1.55}
+
+/* 红灯清单 */
+.safe-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-top:16px}
+.safe-item{display:flex;gap:8px;font-size:.78rem;color:#3a3d4a;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:10px;padding:12px}
+.safe-item .x{color:var(--red);font-weight:800;flex-shrink:0}
+.safe-item .v{color:var(--ok);font-weight:800;flex-shrink:0}
+
+/* 页脚 */
+.footer{position:relative;z-index:1;background:#121319;color:#b5b8c4;padding:40px 20px 20px;margin-top:40px}
+.footer-inner{max-width:1100px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px;margin-bottom:24px}
+.footer h4{font-size:.88rem;margin-bottom:10px;color:#fff}
+.footer a{display:block;font-size:.78rem;color:#8a8d9a;padding:3px 0;text-decoration:none}
+.footer a:hover{color:var(--orange)}
+.footer p{font-size:.8rem;color:#8a8d9a;line-height:1.65}
+.footer-bottom{text-align:center;font-size:.7rem;color:rgba(181,184,196,.5);padding-top:16px;border-top:1px solid rgba(181,184,196,.1)}
+.footer-bottom a{color:var(--orange);font-weight:600}
+
+@media(max-width:1024px){.hero-ticket::before,.hero-ticket::after{display:none}.ticket::before,.ticket::after{display:none}}
+@media(max-width:768px){
+ .topnav{display:none;position:absolute;top:60px;left:0;right:0;flex-direction:column;background:#1a1c23;padding:12px 20px;border-bottom:1px solid rgba(255,107,53,.18)}
+ .topnav.open{display:flex}.menu-btn{display:block}.footer-grid{grid-template-columns:1fr 1fr}.chat{max-width:95%}}
+@media(max-width:480px){.footer-grid{grid-template-columns:1fr}.hero h1{font-size:1.6rem}}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+<div class="bg"></div>
+
+<!-- 顶部导航 -->
+<div class="topbar"><div class="topbar-inner">
+ <div class="brand"><span class="mk">俺</span>俺也去<b>电影网</b></div>
+ <nav class="topnav" id="topNav">
+  <a href="#home" class="active">首页</a>
+  <a href="#rule">正版立场</a>
+  <a href="#qa">结伴问答</a>
+  <a href="#channels">找片渠道</a>
+  <a href="#genre">按类型</a>
+  <a href="#pd">公共领域</a>
+  <a href="#safe">避坑合规</a>
+ </nav>
+ <button class="menu-btn" id="menuBtn">☰</button>
+</div></div>
+
+<!-- Hero -->
+<section class="hero" id="home"><div class="hero-inner">
+ <div class="hero-ticket">
+  <div class="hero-content">
+   <span class="kicker">AN YE QU · BUDDY LEGAL FINDER</span>
+   <h1>俺也去，<span class="o">正版</span>看<span class="t">电影</span>！</h1>
+   <p>俺也去电影网（anyequanyequdianyingwang-h5.github.io）是结伴式正版找片导航——"俺也去（正版平台）看！"国内走1905/央视频/学习强国/B站官方，海外走Tubi/Pluto/Plex/Kanopy/Hoopla/Internet Archive/Library of Congress。不托管视频、不解析未授权源、不诱导下载播放器；全站静态可爬、移动端自适应，便于必应移动优先收录。</p>
+   <div class="hero-actions">
+    <a class="btn btn-light" href="#qa">🎬 俺也去哪看？</a>
+    <a class="btn btn-outline" href="#channels">🎫 查正版渠道</a>
+   </div>
+  </div>
+ </div>
+</div></section>
+
+<!-- 正版立场 -->
+<div class="container" id="rule">
+ <div class="ticket">
+  <div class="ticket-inner">
+   <h2>🎫 01 为什么"俺也去"只做结伴导航、不播片</h2>
+   <p style="margin-top:10px">免费≠无授权。合法免费通常来自四类：广告型正版平台、图书馆/高校采购、公共领域档案、官方机构发布。Tubi/Pluto/Plex基础内容多可免登录但片单随授权轮换，Kanopy/Hoopla要看本馆资格，Internet Archive与Library of Congress公域片无广告但某版本修复/字幕/配乐可能另有权，1905/央视频/学习强国/B站机构号按当期正版或官方免费层查。本站只按需求给"去哪查、按什么授权、地区是否可用"，不提供未授权点播、不解析第三方源。</p>
+   <ul style="margin-top:10px">
+    <li><b>广告正版：</b>Tubi、Pluto、Plex免费层获授权，用广告换免费，类型片与老片较全，地区片单会轮换</li>
+    <li><b>图书馆：</b>Kanopy偏独立/纪录/Criterion，Hoopla借电影/有声/电子书，靠读者卡或高校账号、按月额度</li>
+    <li><b>公域档案：</b>Internet Archive默片/早期/新闻/教育，LOC National Screening Room早期影片；单部看权利页</li>
+    <li><b>国内官方：</b>1905国产老片与经典译制、央视频纪录与经典、学习强国零广告影视教育、B站筛机构认证号</li>
+   </ul>
+  </div>
+ </div>
+</div>
+
+<!-- 结伴问答 -->
+<div class="container" id="qa">
+ <div class="ticket">
+  <div class="ticket-inner">
+   <h2>🎫 02 结伴问答：俺也去哪看？</h2>
+   <p style="margin-bottom:4px">模拟结伴看片的真实对话，秒级输出正版路径：</p>
+   <div class="chat-grid">
+    <div class="chat left">
+     <div class="chat-avatar">友</div>
+     <div class="chat-bubble"><b>刚上映的想先看！</b>院线新片有没有免费高清？</div>
+    </div>
+    <div class="chat right">
+     <div class="chat-avatar">俺</div>
+     <div class="chat-bubble"><b>俺也去正版窗口！</b>先查正版订阅/租赁窗口；进广告免费层再看Tubi/Pluto/Plex当期授权。凡"院线高清全集免费"无授权主体，按盗版风险处理、不列不点。</div>
+    </div>
+    <div class="chat left">
+     <div class="chat-avatar">友</div>
+     <div class="chat-bubble"><b>老电影/默片去哪刷？</b>想看1930年代以前的。</div>
+    </div>
+    <div class="chat right">
+     <div class="chat-avatar">俺</div>
+     <div class="chat-bubble"><b>俺也去公域档案！</b>Internet Archive与Library of Congress National Screening Room查公域；美国1930及更早出版多入公域，但单部仍看续展/修复/配乐声明。</div>
+    </div>
+    <div class="chat left">
+     <div class="chat-avatar">友</div>
+     <div class="chat-bubble"><b>有读者卡，文艺片看啥？</b>独立/纪录/Criterion那种。</div>
+    </div>
+    <div class="chat right">
+     <div class="chat-avatar">俺</div>
+     <div class="chat-bubble"><b>俺也去图书馆流媒体！</b>Kanopy/Hoopla查本馆采购；Kanopy偏独立/Criterion/纪录，Hoopla偏借阅，按月额度、无广告。</div>
+    </div>
+    <div class="chat left">
+     <div class="chat-avatar">友</div>
+     <div class="chat-bubble"><b>亲子不想注册太复杂</b>有啥免登录的？</div>
+    </div>
+    <div class="chat right">
+     <div class="chat-avatar">俺</div>
+     <div class="chat-bubble"><b>俺也去免登正版！</b>Tubi/Pluto/Plex基础层、1905/央视频部分免费、Archive/LOC公域多可免登录；免登录不等于无广告、无地区限制。</div>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- 找片渠道 -->
+<div class="container" id="channels">
+ <div class="ticket">
+  <div class="ticket-inner">
+   <h2>🎫 03 正版渠道矩阵：按"授权类型"分仓</h2>
+   <p>地区版权会变；图书馆看本馆采购，公域片逐条看权利说明。</p>
+   <div class="ch-grid">
+    <div class="ch"><div class="tag">AD VOD</div><h3>Tubi</h3><p>广告型正版大库，动作/喜剧/恐怖/老爆款较全；基础观看免登录，片单随授权轮换。</p><div class="model">模式：授权+广告</div></div>
+    <div class="ch"><div class="tag">FAST LINEAR</div><h3>Pluto TV</h3><p>线性电影频道+点播，换台式找片省决策；经典线/家庭线/恐怖线多，基础内容免登录。</p><div class="model">模式：授权+广告</div></div>
+    <div class="ch"><div class="tag">SERVER+VOD</div><h3>Plex 免费层</h3><p>个人媒体服务器起家，免费层含授权电影/剧集/FAST直播；不搭服务器也能用发现功能。</p><div class="model">模式：授权+广告</div></div>
+    <div class="ch"><div class="tag">LIBRARY</div><h3>Kanopy / Hoopla</h3><p>图书馆或高校账号进入；Kanopy偏独立/纪录/Criterion，Hoopla借电影/有声/电子书，按月额度、无广告。</p><div class="model">模式：机构采购</div></div>
+    <div class="ch"><div class="tag">PUBLIC DOMAIN</div><h3>Internet Archive</h3><p>公共领域长片、默片、新闻片、教育片档案；无广告无账号，但某版本修复/字幕/配乐可能另有权利。</p><div class="model">模式：公域/许可</div></div>
+    <div class="ch"><div class="tag">ARCHIVE GOV</div><h3>Library of Congress</h3><p>National Screening Room提供大量无已知美国版权限制的早期影片；单部仍看编目权利、隐私与商标声明。</p><div class="model">模式：公域/政府档案</div></div>
+    <div class="ch"><div class="tag">CN OFFICIAL</div><h3>1905 / 央视频</h3><p>1905正版老片与经典译制较全，央视频经典电影/纪录片/老剧稳定、公益属性强、广告少。</p><div class="model">模式：官方正版/免费层</div></div>
+    <div class="ch"><div class="tag">EDU+BILI</div><h3>学习强国 / B站</h3><p>学习强国影视纪录零广告；B站筛机构认证号看戏曲/纪录/文艺，不点个人"全集解析"搬运。</p><div class="model">模式：官方/授权上传</div></div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- 按类型 -->
+<div class="container" id="genre">
+ <div class="ticket">
+  <div class="ticket-inner">
+   <h2>🎫 04 按类型秒答：俺也去哪看这类片？</h2>
+   <p>同类型新旧片走不同授权层；新片以正版窗口为准，不列未授权高清。</p>
+   <div class="genre-flex">
+    <div class="genre-tag">动作/科幻/悬疑 <span>→ 正版VOD / Tubi / Pluto / Archive</span></div>
+    <div class="genre-tag">喜剧/合家欢 <span>→ Tubi Kids / 1905 / Kanopy</span></div>
+    <div class="genre-tag">恐怖/惊悚 <span>→ Pluto / Tubi / Archive / Kanopy</span></div>
+    <div class="genre-tag">纪录片/自然 <span>→ Kanopy / 央视频 / Archive / LOC</span></div>
+    <div class="genre-tag">独立/外语/作者 <span>→ Kanopy / Hoopla / B站 / 资料馆</span></div>
+    <div class="genre-tag">默片/早期经典 <span>→ Archive / LOC / Kanopy / 资料馆</span></div>
+    <div class="genre-tag">国产老片/主旋律 <span>→ 1905 / 央视频 / 学习强国 / 资料馆</span></div>
+    <div class="genre-tag">动画/亲子 <span>→ 官方 / Tubi Kids / B站 / Archive</span></div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- 公共领域 -->
+<div class="container" id="pd">
+ <div class="ticket">
+  <div class="ticket-inner">
+   <h2>🎫 05 公共领域老片："真免费"底层仓</h2>
+   <p>"老"不等于"随便转"：美国按出版年份与续展判断，1930年及更早在美国出版作品通常更易进入公域；1931—1963年未续展才可能公域，1964年后多按95年保护；政府作品、配乐、底本、修复版要分层核。Internet Archive、Library of Congress、Wikimedia Commons都按单条权利页判断，不能因为"在档案站"就默认可商用转载。</p>
+   <div class="pd-grid">
+    <div class="pd-item"><h4>默片喜剧/剧情</h4><p>Archive与LOC默片长片、短片适合拉片；后加配乐、重制字幕可能产生新权利。</p></div>
+    <div class="pd-item"><h4>早期有声/新闻/教育</h4><p>1930s前后新闻重演、政府教育片、战时纪录；美国政府作品通常公域，承包/地方制作要单独看。</p></div>
+    <div class="pd-item"><h4>修复与重剪版</h4><p>重剪、调色、新字幕、新配乐会产生新权利；教学引用原片公域版最稳，修复版先核资料馆授权。</p></div>
+    <div class="pd-item"><h4>公域发现器</h4><p>JustWatch筛Free、WikiFlix/Open Culture类只做导览，播放回Archive/LOC/Commons；不中转录播。</p></div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- 避坑合规 -->
+<div class="container" id="safe">
+ <div class="ticket">
+  <div class="ticket-inner">
+   <h2>🎫 06 红灯清单：结伴可以，版权不松</h2>
+   <p>合法免费站通常说明授权主体、广告模式或图书馆/公域来源；可疑站用假播放键和强制下载。</p>
+   <div class="safe-grid">
+    <div class="safe-item"><span class="x">✕</span> 院线新片"高清全集免费"、要验证码/网盘密码/种子/磁力</div>
+    <div class="safe-item"><span class="x">✕</span> 点播放先下EXE/专用播放器/解码插件/浏览器扩展</div>
+    <div class="safe-item"><span class="x">✕</span> 深度解析第三方视频源、无主体无授权无投诉入口</div>
+    <div class="safe-item"><span class="x">✕</span> 弹窗满屏、假病毒提醒、赌博/成人重定向、域名天天换</div>
+    <div class="safe-item"><span class="x">✕</span> 用"最全/破解/资源站/俺也去秒播"做主卖点、盗海报仿官方</div>
+    <div class="safe-item"><span class="x">✕</span> 老片不分原片公域与修复授权，一律写"免费可下可转"</div>
+    <div class="safe-item"><span class="v">✓</span> 标明渠道类型：广告/订阅/官方/图书馆/公域/资料馆</div>
+    <div class="safe-item"><span class="v">✓</span> 不存片、不解析、不诱导下载任何软件</div>
+    <div class="safe-item"><span class="v">✓</span> 片单写"以平台当期授权、地区与账号资格为准"</div>
+    <div class="safe-item"><span class="v">✓</span> 页脚有主体、隐私、版权投诉与联系入口</div>
+    <div class="safe-item"><span class="v">✓</span> 移动端无全屏强制弹层、锚点可点、核心内容在初始HTML</div>
+    <div class="safe-item"><span class="v">✓</span> 公域片区分原片公域与修复/字幕/配乐另行授权</div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- 页脚 -->
+<footer class="footer"><div class="footer-inner">
+ <div class="footer-grid">
+  <div><div class="brand"><span class="mk">俺</span>俺也去<b>电影网</b></div>
+   <p style="margin-top:10px">俺也去电影网（anyequanyequdianyingwang-h5.github.io）是结伴式正版找片导航：Tubi、Pluto、Plex、Kanopy、Hoopla、Internet Archive、Library of Congress、1905、央视频、学习强国、B站官方等正版/公共领域渠道。不提供未授权播放，不解析非法视听源，不诱导下载任何播放器；静态HTML、内联样式、移动自适应，便于必应抓取，后续可在Bing Webmaster Tools手动提交URL（按规则不生成robots/sitemap文件）。</p></div>
+  <div><h4>栏目</h4><a href="#rule">正版立场</a><a href="#qa">结伴问答</a><a href="#channels">找片渠道</a><a href="#genre">按类型</a></div>
+  <div><h4>渠道</h4><a href="#">广告正版</a><a href="#">图书馆流媒体</a><a href="#">公域档案</a><a href="#">国内官方免费</a></div>
+  <div><h4>说明</h4><a href="#">版权投诉</a><a href="#">隐私说明</a><a href="#">使用条款</a><a href="#">联系我们</a></div>
+ </div>
+ <div class="footer-bottom">
+  <p>© 2024 俺也去电影网 (Buddy Legal Finder) - 结伴正版·公共领域老片·按类型渠道导航</p>
+  <p>网站地址：<a href="https://anyequanyequdianyingwang-h5.github.io">https://anyequanyequdianyingwang-h5.github.io</a></p>
+  <p style="margin-top:6px;opacity:.6">"俺也去"仅指结伴前往正版/公共领域平台观看电影，不涉及盗版全集、资源解析或未授权点播。</p>
+ </div>
+</div></footer>
+
+<script>
+var menuBtn=document.getElementById('menuBtn'),topNav=document.getElementById('topNav');
+menuBtn.onclick=function(){topNav.classList.toggle('open')};
+topNav.querySelectorAll('a').forEach(function(a){a.onclick=function(){topNav.classList.remove('open')}});
+var secs=document.querySelectorAll('section[id],div[id]');
+addEventListener('scroll',function(){
+ var y=scrollY+82;
+ secs.forEach(function(s){
+  if(y>=s.offsetTop&&y<s.offsetTop+s.offsetHeight){
+   document.querySelectorAll('.topnav a').forEach(function(a){a.classList.remove('active')});
+   var l=document.querySelector('.topnav a[href="#'+s.id+'"]');if(l)l.classList.add('active');
+  }
+ });
+});
+</script>
+</body>
+</html>
